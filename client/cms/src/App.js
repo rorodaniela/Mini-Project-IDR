@@ -1,7 +1,7 @@
 import './App.css';
 import Login from './pages/Login';
 import {Switch, Route} from 'react-router-dom'
-import Purchase from './pages/Purchase';
+// import Purchase from './pages/Purchase';
 import Customer from './pages/Customer';
 import Home from './pages/Home';
 import User from './pages/User';
@@ -13,9 +13,9 @@ function App() {
         <Route path='/user'>
           <User/>
         </Route>
-        <Route path='/purchase'>
+        {/* <Route path='/purchase'>
           <Purchase />
-        </Route>
+        </Route> */}
         <Route path='/login'>
           <Login />
         </Route>
