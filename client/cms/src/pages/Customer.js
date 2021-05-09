@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import {useHistory} from 'react-router-dom'
-import { Box, makeStyles, Paper, useTheme } from "@material-ui/core";
+import { Box, Button, makeStyles, Paper, useTheme } from "@material-ui/core";
 import Navigation from "../components/Navigation";
 import Tabel from "../components/Tabel";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,6 +58,12 @@ function Customer() {
     }
   }, []);
 
+  const handleEditCustomer = (id) => {
+  };
+
+  const handleDeleteCustomer = (id) => {
+  };
+
   return (
     <div className={classes.root}>
       <Navigation />
@@ -65,11 +71,12 @@ function Customer() {
         <div className={classes.toolbar}>
           <Paper className={classes.dashboardPaper}>
             <h3 className={classes.pageTitle}>Customer - List</h3>
-            <Box className={classes.informationBox}>
+            {/* <Box className={classes.informationBox}>
               <h3 className={classes.subTitle}> User Information</h3>
-            </Box>
+            </Box> */}
+            <Button>Create Customer</Button>
             <div className={classes.tabelCustomer}>
-              <Tabel data={customers} header={header}/>
+              <Tabel data={customers} header={header} page={'customer'} edit={handleEditCustomer} delete={handleDeleteCustomer} />
             </div>
           </Paper>
         </div>

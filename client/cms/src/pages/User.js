@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const header = [
-  'Username', 'Company', 'Role', 'Manager', 'Status'
+  'Username',  'Manager', 'Status'
 ]
 
 function User() {
@@ -82,8 +82,7 @@ function User() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { users } = useSelector((state) => state.user)
-  const { user } = useSelector((state) => state.user)
+  const { users, user, loading } = useSelector((state) => state.user)
   const { roles } = useSelector((state) => state.role)
   const { companies } = useSelector((state) => state.company)
 
@@ -100,21 +99,21 @@ function User() {
       history.push("/login");
     }
   }, []);
-
+  console.log(users, "<<< users dari user.js");
   const handleCreateUser = () => {
     setActionStatus('create user')
     dispatch(clearUserById())
     setOpenModal(true)
   }
 
-  const handleEditUser = () => { // ID masih hardcode
-    dispatch(getUserByID(1))
+  const handleEditUser = (id) => {
+    dispatch(getUserByID(id))
     setActionStatus('edit user')
     setOpenModal(true)
   }
 
-  const handleUpdateUser = () => {
-    dispatch(updateUser({ id: 1, status: false}))
+  const handleDeleteUser = (id) => {
+    dispatch(updateUser({ id, status: false}))
   };
 
   const handleCloseModal = () => {
@@ -161,9 +160,6 @@ function User() {
         <div className={classes.toolbar}>
           <Paper className={classes.dashboardPaper}>
             <h3 className={classes.pageTitle}>User - List</h3>
-            <Box className={classes.informationBox}>
-              <h3 className={classes.subTitle}> User Information</h3>
-            </Box>
             <div className={classes.createButton}>
               <Button
                 onClick={handleCreateUser}
@@ -172,23 +168,16 @@ function User() {
               >
                 Create User
               </Button>
-              <Button
-                onClick={handleEditUser}
-                variant='contained'
-                color='primary'
-              >
-                Update
-              </Button>
-              <Button
-                onClick={handleUpdateUser}
-                variant='contained'
-                color='primary'
-              >
-                Delete
-              </Button>
             </div>
             <div className={classes.tabelUser}>
-              <Tabel data={users} header={header} close={handleCloseModal} />
+              {
+                loading? (
+                    <>
+                    </>
+                  ) : (
+                    <Tabel data={users} header={header} page={'user'} edit={handleEditUser} delete={handleDeleteUser} />
+                )
+              }
             </div>
           </Paper>
         </div>

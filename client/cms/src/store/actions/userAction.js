@@ -31,6 +31,9 @@ export const saveUsers = (payload) => {
 export const getUsers = () => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: 'LOADING_TRUE'
+      })
       const response = await fetch(baseUrl + "/users", {
         method: "GET",
         mode: "cors",

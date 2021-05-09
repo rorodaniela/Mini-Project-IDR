@@ -2,13 +2,14 @@ let initialState = {
   users: [],
   user: {},
   roles: [],
-  companies: []
+  companies: [],
+  loading: true
 }
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
     case "FETCH_USERS":
-      return { ...state, users: action.payload };
+      return { ...state, users: action.payload, loading: false };
     case "FETCH_USER_By_ID":
       return { ...state, user: action.payload };
     case 'CLEAR_USER_BY_ID':
@@ -17,6 +18,8 @@ function userReducer(state = initialState, action) {
       return { ...state, roles: action.payload };
     case "FETCH_COMPANIES":
       return { ...state, companies: action.payload };
+    case "LOADING_TRUE": 
+      return {...state, loading: true}
     default:
       return state;
   }

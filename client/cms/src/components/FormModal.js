@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {makeStyles, Paper, FormControl, TextField, InputLabel, Select, MenuItem, Button } from '@material-ui/core'
 import { useSelector } from "react-redux";
 
@@ -30,13 +30,24 @@ function FormModal(props) {
   const classes = useStyles();
 
   const [newData, setNewData] = useState({
-    username: props.user.username ? props.user.username : "",
-    password: props.user.password ? props.user.password : "",
-    CompanyId: props.user.CompanyId ? props.user.CompanyId : "",
-    RoleId: props.user.RoleId ? props.user.RoleId : "",
-    manager: props.user.manager ? props.user.manager : "",
-    status: props.user.status ? props.user.username : true,
+    username: props.user ? props.user.username : "",
+    password: props.user ? props.user.password : "",
+    CompanyId: props.user ? props.user.CompanyId : "",
+    RoleId: props.user ? props.user.RoleId : "",
+    manager: props.user ? props.user.manager : "",
+    status: props.user ? props.user.username : true,
   });
+
+  useEffect(()=> {
+    setNewData({
+      username: props.user ? props.user.username : "",
+      password: props.user ? props.user.password : "",
+      CompanyId: props.user ? props.user.CompanyId : "",
+      RoleId: props.user ? props.user.RoleId : "",
+      manager: props.user ? props.user.manager : "",
+      status: props.user ? props.user.username : true,
+    });
+  }, [props.user])
 
   const onChangenewData = (e) => {
     const value = e.target.value;
