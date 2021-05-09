@@ -161,11 +161,7 @@ function User() {
           <Paper className={classes.dashboardPaper}>
             <h3 className={classes.pageTitle}>User - List</h3>
             <div className={classes.createButton}>
-              <Button
-                onClick={handleCreateUser}
-                variant='contained'
-                color='primary'
-              >
+              <Button onClick={handleCreateUser} variant='contained' color='primary'>
                 Create User
               </Button>
             </div>

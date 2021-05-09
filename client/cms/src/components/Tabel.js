@@ -6,14 +6,47 @@ import {
   TableHead,
   TableRow,
   Checkbox,
-  Button
+  Button,
+  makeStyles,
+  Paper,
+  withStyles
 } from "@material-ui/core";
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { useEffect } from "react";
 
-function Tabel(props) {
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell)
+
+const useStyles = makeStyles((theme) => ({
+  actionButton:{
+    margin: theme.spacing(0.3),
+    width: '7vw'
+  },
+  table: {
+    height: '65vh'
+  },
+  tableHead: {
+    backgroundColor: 'black'
+  }
+}))
+function Tabel(props) {
+  const classes = useStyles()
   useEffect(()=> {
   }, [props.data])
 
@@ -30,37 +63,39 @@ function Tabel(props) {
       if (props.page==='user') {
         const {id, username, manager, status} = item
         return (
-          <TableRow key={id}>
-            <TableCell>{username}</TableCell>
-            <TableCell>{manager}</TableCell>
-            <TableCell>{status? 'Active' : 'Deactive'}</TableCell>
-            <TableCell>
-              <Button onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+          <StyledTableRow key={id}>
+            <Checkbox></Checkbox>
+            <TableCell align='center' >{username}</TableCell>
+            <TableCell align='center' >{manager}</TableCell>
+            <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
+            <TableCell align='center' >
+              <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
                 Edit
               </Button>
-              <Button onClick={()=> handleDelete(id)} variant="contained" color="primary" startIcon={<DeleteOutlineIcon />}>
+              <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
                 Delete
               </Button>
             </TableCell>
-          </TableRow>
+          </StyledTableRow>
         )
       } else if (props.page ==='customer') {
         const { id, name, created_info, modified_info, status } = item;
         return (
-          <TableRow key={id}>
-            <TableCell>{name}</TableCell>
-            <TableCell>{created_info}</TableCell>
-            <TableCell>{modified_info}</TableCell>
-            <TableCell>{status ? "Active" : "Deactive"}</TableCell>
-            <TableCell>
-              <Button onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+          <StyledTableRow key={id}>
+            <Checkbox></Checkbox>
+            <TableCell align='center' >{name}</TableCell>
+            <TableCell align='center' >{created_info}</TableCell>
+            <TableCell align='center' >{modified_info}</TableCell>
+            <TableCell align='center' >{status ? "Active" : "Deactive"}</TableCell>
+            <TableCell align='center' >
+              <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
                 Edit
               </Button>
-              <Button onClick={()=> handleDelete(id)} variant="contained" color="primary" startIcon={<DeleteOutlineIcon />}>
+              <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
                 Delete
               </Button>
             </TableCell>
-          </TableRow>
+          </StyledTableRow>
         );
       }
     })
@@ -68,26 +103,26 @@ function Tabel(props) {
   }
 
   return (
-    <>
+    <Paper className={classes.table}>
       <TableContainer style={{ maxHeight: "50vh" }}>
-        <Table stickyHeader>
-          <TableHead>
-            {/* <TableRow> {renderTableHeader()}</TableRow> */}
-            <TableRow>
+        <Table stickyHeader size='small'>
+          <TableHead className={classes.tableHead}>
+            <StyledTableRow>
+              <StyledTableCell></StyledTableCell>
               {
                 props.header?.map((item) => {
-                  return <TableCell>{item}</TableCell>
+                  return <StyledTableCell align='center' >{item}</StyledTableCell>
                 })
               }
-              <TableCell>Action</TableCell>
-            </TableRow>
+              <StyledTableCell align='center' >ACTION</StyledTableCell>
+            </StyledTableRow>
           </TableHead>
           <TableBody>  
             {renderTableData()}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Paper>
   );
 }
 
