@@ -1,7 +1,18 @@
-import { applyMiddleware, createStore } from "redux"
+import { applyMiddleware, createStore, combineReducers } from "redux"
 import thunk from "redux-thunk"
-import reducer from '../store/reducers/reducer'
+import companyReducer from "./reducers/companyReducer";
+import customerReducer from './reducers/customerReducer'
+import roleReducer from "./reducers/roleReducer";
+import userReducer from './reducers/userReducer'
 
-let store = createStore(reducer, applyMiddleware(thunk))
+const rootReducers = combineReducers({
+  user: userReducer,
+  customer: customerReducer,
+  role: roleReducer,
+  company: companyReducer,  
+});
+
+const middlewareEnhancer = applyMiddleware(thunk);
+let store = createStore(rootReducers, middlewareEnhancer)
 
 export default store

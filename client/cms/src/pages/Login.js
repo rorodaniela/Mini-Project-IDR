@@ -1,5 +1,4 @@
 import { Avatar, Button, FormControl, Grid, Paper, Box, InputAdornment, FilledInput, Typography } from "@material-ui/core"
-import LockIcon from "@material-ui/icons/Lock";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import PersonIcon from "@material-ui/icons/Person";
 import digitalRetail from '../assets/DIGITAL_RETAIL.png'
@@ -7,6 +6,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import { login } from "../store/actions/userAction"
+
 let logo =
   "https://kinsta.com/wp-content/uploads/2018/03/content-management-system-2.png";
 
@@ -37,6 +37,7 @@ function Login() {
   return (
     <div className='login'>
       <Grid container>
+
         {/* Form */}
         <Grid item xl style={{ margin: "3rem" }}>
           <Paper
@@ -102,6 +103,7 @@ function Login() {
             </Grid>
           </Paper>
           {/* End of Form */}
+
         </Grid>
         <div
           style={{
@@ -110,7 +112,7 @@ function Login() {
             margin: 'auto'
           }}
         >
-          <Grid item xl>
+          <Grid item lg>
             <img src={digitalRetail} alt='Digital Retail' />
           </Grid>
         </div>

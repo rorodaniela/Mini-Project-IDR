@@ -2,16 +2,28 @@ import './App.css';
 import Login from './pages/Login';
 import {Switch, Route} from 'react-router-dom'
 import Purchase from './pages/Purchase';
+import Customer from './pages/Customer';
+import Home from './pages/Home';
+import User from './pages/User';
 
 function App() {
   return (
     <Switch>
-      <div className="App">
+      <div className='App'>
+        <Route path='/user'>
+          <User/>
+        </Route>
+        <Route path='/purchase'>
+          <Purchase />
+        </Route>
         <Route path='/login'>
-          <Login/>
+          <Login />
+        </Route>
+        <Route path='/customer'>
+          <Customer />
         </Route>
         <Route exact path='/'>
-          <Purchase/>
+          <Home />
         </Route>
       </div>
     </Switch>
