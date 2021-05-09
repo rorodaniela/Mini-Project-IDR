@@ -53,7 +53,7 @@ function Customer() {
   const history = useHistory();
   const dispatch = useDispatch()
 
-  const {customers} = useSelector((state)=> state.customer)
+  const {customers, isLoading} = useSelector((state)=> state.customer)
 
   useEffect(() => {
     if (localStorage.length > 0) {
@@ -80,7 +80,13 @@ function Customer() {
               <Button variant='contained' color='primary'>Create Customer</Button>
             </div>
             <div className={classes.tabelCustomer}>
-              <Tabel data={customers} header={header} page={'customer'} edit={handleEditCustomer} delete={handleDeleteCustomer} />
+              {
+                isLoading? (
+                  <Tabel data={[]} header={header} page={'customer'}/>
+                ) : (
+                  <Tabel data={customers} header={header} page={'customer'} edit={handleEditCustomer} delete={handleDeleteCustomer} />
+                )
+              }
             </div>
           </Paper>
         </div>
