@@ -168,8 +168,7 @@ function User() {
             <div className={classes.tabelUser}>
               {
                 loading? (
-                    <>
-                    </>
+                    <Tabel data={[]} header={header} page={'user'} />
                   ) : (
                     <Tabel data={users} header={header} page={'user'} edit={handleEditUser} delete={handleDeleteUser} />
                 )

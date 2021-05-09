@@ -10,6 +10,9 @@ export const saveCustomers = (payload) => {
 export const getCustomers = () => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: 'ISLOADING_TRUE'
+      })
       const response = await fetch(baseUrl + "/customer", {
         method: "GET",
         mode: "cors",
