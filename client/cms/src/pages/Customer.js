@@ -33,13 +33,18 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     margin: "0 0 0 10px",
   },
+  createButton: {
+    display: "flex",
+    justifyContent: "flex-end",
+    margin: "1rem 1rem 0 1rem",
+  },
   tabelCustomer: {
     margin: "1rem 1rem 0 1rem",
   },
 }));
 
 const header = [
-  'NAME', 'CREATED INFORMATION', 'MODIFIED INFORMATION', 'STATUS ACTIVE'
+  'NAME', 'CREATED INFO', 'MODIFIED INFO', 'STATUS ACTIVE'
 ]
 
 function Customer() {
@@ -71,10 +76,9 @@ function Customer() {
         <div className={classes.toolbar}>
           <Paper className={classes.dashboardPaper}>
             <h3 className={classes.pageTitle}>Customer - List</h3>
-            {/* <Box className={classes.informationBox}>
-              <h3 className={classes.subTitle}> User Information</h3>
-            </Box> */}
-            <Button>Create Customer</Button>
+            <div className={classes.createButton}>
+              <Button variant='contained' color='primary'>Create Customer</Button>
+            </div>
             <div className={classes.tabelCustomer}>
               <Tabel data={customers} header={header} page={'customer'} edit={handleEditCustomer} delete={handleDeleteCustomer} />
             </div>

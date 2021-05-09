@@ -6,6 +6,7 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -23,7 +24,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -33,9 +34,17 @@ const useStyles = makeStyles((theme) => ({
       width: drawerWidth,
       flexShrink: 0,
     },
+    [theme.breakpoints.up("md")]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+    [theme.breakpoints.up("md")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
@@ -43,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+    [theme.breakpoints.up("md")]: {
       display: "none",
     },
   },
@@ -55,14 +67,20 @@ function Navigation(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory()
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('access_token')
+    history.push('/login')
+  }
+
   const drawer = (
-    <div >
+    <div>
       <Divider />
       <MenuItem component={Link} to={"/"}>
         <ListItem button>
@@ -118,6 +136,15 @@ function Navigation(props) {
         </ListItem>
       </MenuItem>
       <Divider />
+      <MenuItem onClick={handleLogout}>
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText>Logout</ListItemText>
+        </ListItem>
+      </MenuItem>
+      <Divider />
     </div>
   );
 
@@ -138,7 +165,7 @@ function Navigation(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6'lg sm={0}>
+          <Typography variant='h6'lg>
             Content Management System
           </Typography>
         </Toolbar>

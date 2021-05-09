@@ -1,21 +1,85 @@
-import { Avatar, Button, FormControl, Grid, Paper, Box, InputAdornment, FilledInput, Typography } from "@material-ui/core"
+import { Avatar, Button, FormControl, Grid, Paper, Box, InputAdornment, FilledInput, Typography, makeStyles } from "@material-ui/core"
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import PersonIcon from "@material-ui/icons/Person";
 import digitalRetail from '../assets/DIGITAL_RETAIL.png'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import { login } from "../store/actions/userAction"
+import Swal from 'sweetalert2'
 
 let logo =
   "https://kinsta.com/wp-content/uploads/2018/03/content-management-system-2.png";
 
+const useStyles = makeStyles((theme) => ({
+  image: {
+    maxWidth: theme.spacing(0),
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "55vw",
+    },
+    [theme.breakpoints.up("lg")]: {
+      maxWidth: "55vw",
+    },
+  },
+  formLogin: {
+    maxWidth: theme.spacing(0),
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "50vw",
+      maxHeight: "80vh",
+      padding: "60px 20px",
+      margin: "auto",
+    },
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "30vw",
+      padding: "60px 20px",
+      maxHeight: "65vh",
+    },
+    [theme.breakpoints.up("lg")]: {
+      maxWidth: "30vw",
+      padding: "70px 20px",
+      maxHeight: "65vh",
+    },
+  },
+  logo: {
+    marginBottom: "0.5rem",
+  },
+  avatar: {
+    backgroundColor: "#FFDB58",
+    width: "5rem",
+    height: "5rem",
+  },
+  title: {
+    marginBottom: "0.8rem",
+  },
+  imageColoumn: {
+    display: "flex",
+    flexDirection: "column-reverse",
+    margin: "auto",
+  },
+  button: {
+    marginTop: "1.5rem",
+    width: "100%",
+    height: "3rem",
+  },
+}));
+
 function Login() {
+  const classes = useStyles()
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const dispatch = useDispatch()
   const history = useHistory()
+
+  useEffect(() => {
+    if (localStorage.length > 0) {
+      history.push('/')
+    }
+  }, [])
 
   function changeUsername(e) {
     setUsername(e.target.value)
@@ -29,37 +93,44 @@ function Login() {
     let dataLogin = { username, password }
     dispatch(login(dataLogin))
     setUsername('')
-    setPassword('');
-    history.push('/')
+    setPassword('')
+    setTimeout(() => {
+      if (localStorage.access_token) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Success",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        history.push('/')
+      } else {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Username or password invalid",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+      
+    }, 500);
     
   }
 
   return (
     <div className='login'>
       <Grid container>
-
         {/* Form */}
-        <Grid item xl style={{ margin: "3rem" }}>
-          <Paper
-            elevation={20}
-            style={{
-              padding: "60px 20px",
-              width: "30vw",
-              height: "70vh",
-            }}
-          >
+        <Grid item xl={3} lg={4} md={4} sm={12} xs={12} style={{ margin: "3rem" }}>
+          <Paper elevation={20} className={classes.formLogin}>
             <Grid align='center'>
-              <div style={{marginBottom: '25px'}}>
-                <Avatar sizes='lg' src={logo} alt='CMS' style={{ backgroundColor: "#FFDB58", width: '5rem', height: '5rem' }}></Avatar>
-                <h1 style={{ marginBottom: "10px" }}>Sign In</h1>
+              <div className={classes.logo}>
+                <Avatar className={classes.avatar} src={logo} alt='CMS'></Avatar>
+                <h1 className={classes.title}>Sign In</h1>
                 <Typography variant='caption' >Welcome to IDR CMS System</Typography>
               </div>
-              <FormControl
-                variant='filled'
-                component={Box}
-                width='100%'
-                marginBottom='2rem!important'
-              >
+              <FormControl variant='filled' component={Box} width='100%' marginBottom='7%!important'>
                 <FilledInput
                   autoComplete='off'
                   placeholder='Input Your Username'
@@ -72,12 +143,7 @@ function Login() {
                   }
                 />
               </FormControl>
-              <FormControl
-                autoComplete='off'
-                variant='filled'
-                component={Box}
-                width='100%'
-              >
+              <FormControl autoComplete='off' variant='filled' component={Box} width='100%'>
                 <FilledInput
                   autoComplete='off'
                   type='password'
@@ -91,13 +157,7 @@ function Login() {
                   }
                 />
               </FormControl>
-              <Button
-                type='submit'
-                onClick={submitLogin}
-                variant='contained'
-                color='primary'
-                style={{ marginTop: "2.5rem", width: '100%', height: '3rem' }}
-              >
+              <Button type='submit' onClick={submitLogin} variant='contained' color='primary' className={classes.button}>
                 Sign In
               </Button>
             </Grid>
@@ -105,15 +165,9 @@ function Login() {
           {/* End of Form */}
 
         </Grid>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column-reverse",
-            margin: 'auto'
-          }}
-        >
-          <Grid item lg>
-            <img src={digitalRetail} alt='Digital Retail' />
+        <div className={classes.imageColoumn}>
+          <Grid item xl={9} lg={8} md={8} sm={0} xs={0}>
+            <img className={classes.image} src={digitalRetail} alt='Digital Retail' />
           </Grid>
         </div>
       </Grid>

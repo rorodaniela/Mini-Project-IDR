@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Home() {
+function Purchase() {
   const classes = useStyles()
   const theme = useTheme()
   const history = useHistory();
@@ -39,7 +39,7 @@ function Home() {
       <div className={classes.content}>
         <div className={classes.toolbar}>
           <Paper className={classes.dashboardPaper}>
-            <h1 className={classes.pageTitle}> HOME</h1>
+            <h1 className={classes.pageTitle}> Purchase - List</h1>
           </Paper>
         </div>
       </div>
@@ -47,4 +47,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Purchase

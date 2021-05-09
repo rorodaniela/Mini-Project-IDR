@@ -3,6 +3,7 @@ const baseUrl = "http://localhost:3001";
 export const login = (payload) => {
   return async (dispatch) => {
     try {
+
       const response = await fetch(baseUrl + "/login", {
         method: "POST",
         mode: "cors",
@@ -13,7 +14,13 @@ export const login = (payload) => {
       });
       
       const data = await response.json();
-      localStorage.setItem("access_token", data.access_token);
+
+      if (data) {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+        });
+        localStorage.setItem("access_token", data.access_token);
+      }
 
     } catch (error) {
       console.log(error);

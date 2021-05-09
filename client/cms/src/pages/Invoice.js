@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, Paper, useTheme } from "@material-ui/core";
 import Navigation from "../components/Navigation";
 
-const drawerWidth = 240
+const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -13,18 +13,18 @@ const useStyles = makeStyles((theme) => ({
   },
   pageTitle: {
     textAlign: "left",
-    padding: "0.5rem 0 0 1rem"
+    padding: "0.5rem 0 0 1rem",
   },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     padding: theme.spacing(8),
-  }
+  },
 }));
 
-function Home() {
-  const classes = useStyles()
-  const theme = useTheme()
+function Invoice() {
+  const classes = useStyles();
+  const theme = useTheme();
   const history = useHistory();
 
   useEffect(() => {
@@ -39,12 +39,12 @@ function Home() {
       <div className={classes.content}>
         <div className={classes.toolbar}>
           <Paper className={classes.dashboardPaper}>
-            <h1 className={classes.pageTitle}> HOME</h1>
+            <h1 className={classes.pageTitle}> Invoice - List</h1>
           </Paper>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Invoice;

@@ -1,23 +1,31 @@
 import './App.css';
 import Login from './pages/Login';
 import {Switch, Route} from 'react-router-dom'
-// import Purchase from './pages/Purchase';
+import Purchase from './pages/Purchase';
 import Customer from './pages/Customer';
 import Home from './pages/Home';
 import User from './pages/User';
+import Invoice from './pages/Invoice';
+import Role from './pages/Role';
 
 function App() {
   return (
     <Switch>
       <div className='App'>
         <Route path='/user'>
-          <User/>
+          <User />
         </Route>
-        {/* <Route path='/purchase'>
+        <Route path='/role'>
+          <Role/>
+        </Route>
+        <Route path='/purchase'>
           <Purchase />
-        </Route> */}
+        </Route>
         <Route path='/login'>
           <Login />
+        </Route>
+        <Route path='/invoice'>
+          <Invoice />
         </Route>
         <Route path='/customer'>
           <Customer />
