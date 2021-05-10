@@ -14,6 +14,8 @@ import {
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getUserByID } from "../store/actions/userAction";
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -46,11 +48,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 function Tabel(props) {
+  const dispatch = useDispatch()
   const classes = useStyles()
   useEffect(()=> {
   }, [props.data])
-
   const handleEdit = (id) => {
+    dispatch(getUserByID(id))
     props.edit(id)
   }
 
@@ -63,11 +66,12 @@ function Tabel(props) {
       console.log("<<<masuk");
       return props.data.map((item, idx) => {
         if (props.page==='user') {
-          const {id, username, manager, status} = item
+          const {id, username, manager, status, Company} = item
           return (
             <StyledTableRow key={id}>
               <Checkbox></Checkbox>
               <TableCell align='center' >{username}</TableCell>
+              <TableCell align='center' >{Company.name}</TableCell>
               <TableCell align='center' >{manager}</TableCell>
               <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
               <TableCell align='center' >

@@ -132,6 +132,7 @@ export const createUser = (payload) => {
 };
 
 export const editUser = (payload) => {
+  console.log(payload,'<<<<<< ini payload')
   return async (dispatch) => {
     try {
       const response = await fetch(baseUrl + `/users/${payload.id}`, {
@@ -144,7 +145,7 @@ export const editUser = (payload) => {
         body: JSON.stringify(payload)
       });
 
-      const data = await response.json();
+      await response.json();
       dispatch(getUsers());
 
     } catch (error) {

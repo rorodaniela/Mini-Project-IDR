@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const header = [
-  'Username',  'Manager', 'Status'
+  'Username', 'Company', 'Manager', 'Status'
 ]
 
 function User() {
@@ -106,8 +106,7 @@ function User() {
     setOpenModal(true)
   }
 
-  const handleEditUser = (id) => {
-    dispatch(getUserByID(id))
+  const handleEditUser = () => {
     setActionStatus('edit user')
     setOpenModal(true)
   }
