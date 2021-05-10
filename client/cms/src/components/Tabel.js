@@ -75,7 +75,7 @@ function Tabel(props) {
                     Edit
                   </Button>
                   <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
-                    Delete
+                    Delete 
                   </Button>
                 </TableCell>
               </StyledTableRow>
