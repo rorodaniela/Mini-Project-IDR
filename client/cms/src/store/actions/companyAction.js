@@ -10,6 +10,10 @@ export const saveCompanies = (payload) => {
 export const getCompanies = () => {
   return async (dispatch) => {
     try {
+      dispatch({
+        type: 'ISLOADING_TRUE'
+      })
+
       const response = await fetch(baseUrl + "/company", {
         method: "GET",
         mode: "cors",
@@ -21,6 +25,7 @@ export const getCompanies = () => {
 
       const data = await response.json();
       dispatch(saveCompanies(data));
+      
     } catch (error) {
       console.log(error);
     }
