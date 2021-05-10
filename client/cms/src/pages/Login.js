@@ -3,7 +3,7 @@ import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import PersonIcon from "@material-ui/icons/Person";
 import digitalRetail from '../assets/DIGITAL_RETAIL.png'
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router"
 import { login } from "../store/actions/userAction"
 import Swal from 'sweetalert2'
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const classes = useStyles()
-
+  const {isLogin} = useSelector((state) => state.user)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -92,10 +92,12 @@ function Login() {
   function submitLogin() {
     let dataLogin = { username, password }
     dispatch(login(dataLogin))
+    console.log("<<< Is Login >>>", isLogin);
     setUsername('')
     setPassword('')
     setTimeout(() => {
-      if (localStorage.access_token) {
+      console.log(isLogin, "<<< is login >>>");
+      if (isLogin === true) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -114,7 +116,7 @@ function Login() {
         });
       }
       
-    }, 500);
+    }, 2000);
     
   }
 

@@ -23,6 +23,7 @@ export const getCustomers = () => {
       });
 
       const data = await response.json();
+      console.log(data, "<<< data customer dari action");
       dispatch(saveCustomers(data))
 
     } catch (error) {

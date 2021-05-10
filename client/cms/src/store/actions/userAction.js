@@ -1,5 +1,11 @@
 const baseUrl = "http://localhost:3001";
 
+export const logout = () => {
+  return{
+    type: "LOGIN_FALSE",
+  }
+}
+
 export const login = (payload) => {
   return async (dispatch) => {
     try {
@@ -15,11 +21,12 @@ export const login = (payload) => {
       
       const data = await response.json();
 
-      if (data) {
+      if (data.access_token) {
         dispatch({
           type: "LOGIN_SUCCESS",
         });
         localStorage.setItem("access_token", data.access_token);
+        console.log(data.access_token, "<<< access token >>");
       }
 
     } catch (error) {

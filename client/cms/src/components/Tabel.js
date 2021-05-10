@@ -60,45 +60,49 @@ function Tabel(props) {
 
   const renderTableData = () => {
     if (props.data.length > 0) {
-      console.log("<<<masuk");
       return props.data.map((item, idx) => {
         if (props.page==='user') {
-          const {id, username, manager, status} = item
-          return (
-            <StyledTableRow key={id}>
-              <Checkbox></Checkbox>
-              <TableCell align='center' >{username}</TableCell>
-              <TableCell align='center' >{manager}</TableCell>
-              <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
-              <TableCell align='center' >
-                <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
-                  Edit
-                </Button>
-                <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
-                  Delete
-                </Button>
-              </TableCell>
-            </StyledTableRow>
-          )
+          if (item.status === true) {
+            const {id, username, manager, status} = item
+            return (
+              <StyledTableRow key={id}>
+                <Checkbox></Checkbox>
+                <TableCell align='center' >{username}</TableCell>
+                <TableCell align='center' >{manager}</TableCell>
+                <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
+                <TableCell align='center' >
+                  <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                    Edit
+                  </Button>
+                  <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
+                    Delete
+                  </Button>
+                </TableCell>
+              </StyledTableRow>
+            )
+          }
         } else if (props.page ==='customer') {
-          const { id, name, created_info, modified_info, status } = item;
-          return (
-            <StyledTableRow key={id}>
-              <Checkbox></Checkbox>
-              <TableCell align='center' >{name}</TableCell>
-              <TableCell align='center' >{created_info}</TableCell>
-              <TableCell align='center' >{modified_info}</TableCell>
-              <TableCell align='center' >{status ? "Active" : "Deactive"}</TableCell>
-              <TableCell align='center' >
-                <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
-                  Edit
-                </Button>
-                <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
-                  Delete
-                </Button>
-              </TableCell>
-            </StyledTableRow>
-          );
+          console.log(item, "<<< item dari customer >>");
+          if (item.User) {
+            const { id, name, created_info, modified_info, status } = item;
+            return (
+              <StyledTableRow key={id}>
+                <Checkbox></Checkbox>
+                <TableCell align='center' >{name}</TableCell>
+                <TableCell align='center' >{created_info}</TableCell>
+                <TableCell align='center' >{modified_info}</TableCell>
+                {/* <TableCell align='center' >{status ? "Active" : "Deactive"}</TableCell> */}
+                <TableCell align='center' >
+                  <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                    Edit
+                  </Button>
+                  <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
+                    Delete
+                  </Button>
+                </TableCell>
+              </StyledTableRow>
+            )
+          }
         } 
       })
     } else {

@@ -25,6 +25,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/actions/userAction';
 
 const drawerWidth = 240;
 
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Navigation(props) {
   const { window } = props;
+  const dispatch = useDispatch()
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory()
@@ -76,6 +79,7 @@ function Navigation(props) {
 
   const handleLogout = () => {
     localStorage.removeItem('access_token')
+    dispatch(logout())
     history.push('/login')
   }
 

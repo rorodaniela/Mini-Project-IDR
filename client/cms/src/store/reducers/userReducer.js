@@ -8,6 +8,7 @@ let initialState = {
 }
 
 function userReducer(state = initialState, action) {
+  console.log(action.type, "<< type dari reducers");
   switch (action.type) {
     case "FETCH_USERS":
       return { ...state, users: action.payload, loading: false };
@@ -22,9 +23,9 @@ function userReducer(state = initialState, action) {
     case "LOADING_TRUE":
       return { ...state, loading: true };
     case "LOGIN_SUCCESS":
-      return { ...state, login: true };
+      return { ...state, isLogin: true };
     case "LOGIN_FALSE":
-      return { ...state, login: false };
+      return { ...state, isLogin: false };
     default:
       return state;
   }

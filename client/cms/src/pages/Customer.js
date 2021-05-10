@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const header = [
-  'NAME', 'CREATED INFO', 'MODIFIED INFO', 'STATUS ACTIVE'
+  'NAME', 'CREATED INFO', 'MODIFIED INFO'
 ]
 
 function Customer() {

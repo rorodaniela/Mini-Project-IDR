@@ -99,7 +99,7 @@ function User() {
       history.push("/login");
     }
   }, []);
-  console.log(users, "<<< users dari user.js");
+
   const handleCreateUser = () => {
     setActionStatus('create user')
     dispatch(clearUserById())
