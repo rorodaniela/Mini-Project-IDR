@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import User from './pages/User';
 import Invoice from './pages/Invoice';
 import Role from './pages/Role';
+import BusinessUnit from './pages/Business';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <User />
         </Route>
         <Route path='/role'>
-          <Role/>
+          <Role />
         </Route>
         <Route path='/purchase'>
           <Purchase />
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path='/customer'>
           <Customer />
+        </Route>
+        <Route path='/business'>
+          <BusinessUnit/>
         </Route>
         <Route exact path='/'>
           <Home />
