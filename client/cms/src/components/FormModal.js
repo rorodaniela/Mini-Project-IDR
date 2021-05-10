@@ -30,6 +30,7 @@ function FormModal(props) {
   const classes = useStyles();
 
   const [newData, setNewData] = useState({
+    id: props.user ? props.user.id : "",
     username: props.user ? props.user.username : "",
     password: props.user ? props.user.password : "",
     CompanyId: props.user ? props.user.CompanyId : "",
@@ -40,12 +41,13 @@ function FormModal(props) {
 
   useEffect(()=> {
     setNewData({
+      id: props.user ? props.user.id : "",
       username: props.user ? props.user.username : "",
       password: props.user ? props.user.password : "",
       CompanyId: props.user ? props.user.CompanyId : "",
       RoleId: props.user ? props.user.RoleId : "",
       manager: props.user ? props.user.manager : "",
-      status: props.user ? props.user.username : true,
+      status: props.user ? props.user.status : true,
     });
   }, [props.user])
 
@@ -57,14 +59,15 @@ function FormModal(props) {
     });
   };
 
-  const handleSubmit = () => {
-    const { username, CompanyId, RoleId, manager, status } = newData
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const {id, username, CompanyId, RoleId, manager, status } = newData
     switch (props.action) {
       case "create user":
         props.submit(newData);
         break;
       case "edit user":
-        props.submit({ username, CompanyId, RoleId, manager, status });
+        props.submit({ id, username, CompanyId, RoleId, manager, status });
         break;
       default: 
         props.close()
