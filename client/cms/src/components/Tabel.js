@@ -63,15 +63,15 @@ function Tabel(props) {
 
   const renderTableData = () => {
     if (props.data.length > 0) {
-      console.log("<<<masuk");
       return props.data.map((item, idx) => {
-        if (props.page==='user') {
-          const {id, username, manager, status, Company} = item
+        if (props.page==='user'&& item.User) {
+          const {id, username, User, manager, status, Company} = item
           return (
             <StyledTableRow key={id}>
               <Checkbox></Checkbox>
               <TableCell align='center' >{username}</TableCell>
-              <TableCell align='center' >{Company.name}</TableCell>
+              <TableCell align='center' >{User.username}</TableCell>
+              <TableCell align='center' >{User.Company.name}</TableCell>
               <TableCell align='center' >{manager}</TableCell>
               <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
               <TableCell align='center' >
