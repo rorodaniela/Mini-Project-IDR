@@ -23,6 +23,7 @@ export const getCustomers = () => {
       });
 
       const data = await response.json();
+      console.log(data,'<<<ini action customer')
       dispatch(saveCustomers(data))
 
     } catch (error) {

@@ -22,9 +22,9 @@ function userReducer(state = initialState, action) {
     case "LOADING_TRUE":
       return { ...state, loading: true };
     case "LOGIN_SUCCESS":
-      return { ...state, login: true };
+      return { ...state, isLogin: true };
     case "LOGIN_FALSE":
-      return { ...state, login: false };
+      return { ...state, isLogin: false };
     default:
       return state;
   }

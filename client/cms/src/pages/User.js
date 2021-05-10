@@ -140,7 +140,7 @@ function User() {
 
   }
   
-
+console.log(user,'ini user')
   return (
     <div className={classes.root}>
       <Navigation />
