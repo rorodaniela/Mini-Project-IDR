@@ -1,9 +1,10 @@
+import Swal from 'sweetalert2'
 const baseUrl = "http://localhost:3001";
 
 export const login = (payload) => {
   return async (dispatch) => {
     try {
-
+      
       const response = await fetch(baseUrl + "/login", {
         method: "POST",
         mode: "cors",
@@ -15,13 +16,27 @@ export const login = (payload) => {
       
       const data = await response.json();
 
-      if (data) {
+      if (data.access_token) {
         dispatch({
           type: "LOGIN_SUCCESS",
         });
-        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("access_token", data.access_token); 
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Login Success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Username or password invalid",
+            showConfirmButton: false,
+            timer: 2000,
+          });
       }
-
     } catch (error) {
       console.log(error);
     }
