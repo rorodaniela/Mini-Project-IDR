@@ -51,7 +51,7 @@ function Role() {
       <div className={classes.content}>
         <div className={classes.toolbar}>
           <Paper className={classes.dashboardPaper}>
-            <h1 className={classes.pageTitle}> Role</h1>
+            <h3 className={classes.pageTitle}> Role - List</h3>
             <div className={classes.tabelRole}>
               {
                 isLoading? (

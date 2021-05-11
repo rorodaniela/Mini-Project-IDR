@@ -2,7 +2,8 @@ let initialState = {
   roles: [],
   roleById: [],
   entity:[],
-  isLoading: true
+  isLoading: true,
+  actions: []
 };
 
 function roleReducer(state = initialState, action) {
@@ -15,6 +16,8 @@ function roleReducer(state = initialState, action) {
       return { ...state, roleById: action.payload, isLoading: false };
     case "FETCH_ENTITY":
       return { ...state, entity: action.payload, isLoading: false };
+    case "FETCH_ACTION":
+      return { ...state, actions: action.payload, isLoading: false };
     default:
       return state;
   }

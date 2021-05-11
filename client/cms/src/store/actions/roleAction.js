@@ -85,9 +85,39 @@ export const getEntity = (id) => {
       });
 
       const data = await response.json();
-      // console.log(data, "<<< data role by id from action");
       dispatch(saveEntity(data));
       
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const saveAction = (payload) => {
+  return {
+    type: "FETCH_ACTION",
+    payload,
+  };
+};
+
+export const getAction = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: "ISLOADING",
+      });
+      const response = await fetch(baseUrl + `/action`, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+      });
+
+      const data = await response.json();
+      dispatch(saveAction(data));
+
     } catch (error) {
       console.log(error);
     }
