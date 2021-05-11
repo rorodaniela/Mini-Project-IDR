@@ -30,13 +30,13 @@ function FormModal(props) {
   const classes = useStyles();
 
   const [newData, setNewData] = useState({
-    id: props.user ? props.user.id : "",
-    username: props.user ? props.user.username : "",
-    password: props.user ? props.user.password : "",
-    CompanyId: props.user ? props.user.CompanyId : "",
-    RoleId: props.user ? props.user.RoleId : "",
-    manager: props.user ? props.user.manager : "",
-    status: props.user ? props.user.username : true,
+    id: "",
+    username: "",
+    password: "",
+    CompanyId: "",
+    RoleId: "",
+    manager: "",
+    status: true,
   });
 
   useEffect(()=> {

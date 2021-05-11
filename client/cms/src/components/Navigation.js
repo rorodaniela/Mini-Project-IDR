@@ -7,6 +7,7 @@ import ListAltIcon from '@material-ui/icons/ListAlt';
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import BusinessIcon from "@material-ui/icons/Business";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -133,6 +134,15 @@ function Navigation(props) {
             <VpnKeyIcon />
           </ListItemIcon>
           <ListItemText>Role</ListItemText>
+        </ListItem>
+      </MenuItem>
+      <Divider />
+      <MenuItem component={Link} to={"/business"}>
+        <ListItem button>
+          <ListItemIcon>
+            <BusinessIcon />
+          </ListItemIcon>
+          <ListItemText>Business Unit</ListItemText>
         </ListItem>
       </MenuItem>
       <Divider />

@@ -8,6 +8,7 @@ import User from './pages/User';
 import Invoice from './pages/Invoice';
 import Role from './pages/Role';
 import RoleDetail from './components/RoleDetail'
+import BusinessUnit from './pages/Business';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <RoleDetail/>
         </Route>
         <Route path='/role'>
-          <Role/>
+          <Role />
         </Route>
         <Route path='/purchase'>
           <Purchase />
@@ -33,6 +34,9 @@ function App() {
         </Route>
         <Route path='/customer'>
           <Customer />
+        </Route>
+        <Route path='/business'>
+          <BusinessUnit/>
         </Route>
         <Route exact path='/'>
           <Home />
