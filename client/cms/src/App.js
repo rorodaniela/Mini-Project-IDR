@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import User from './pages/User';
 import Invoice from './pages/Invoice';
 import Role from './pages/Role';
+import RoleDetail from './components/RoleDetail'
 import BusinessUnit from './pages/Business';
 
 function App() {
@@ -15,6 +16,9 @@ function App() {
       <div className='App'>
         <Route path='/user'>
           <User />
+        </Route>
+        <Route path='/role/:id'>
+          <RoleDetail/>
         </Route>
         <Route path='/role'>
           <Role />

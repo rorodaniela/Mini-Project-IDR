@@ -16,6 +16,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUserByID } from "../store/actions/userAction";
+import {useHistory} from 'react-router-dom'
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 function Tabel(props) {
+  const history = useHistory()
   const dispatch = useDispatch()
   const classes = useStyles()
   useEffect(()=> {
@@ -59,6 +61,10 @@ function Tabel(props) {
 
   const handleDelete = (id) => {
     props.delete(id)
+  }
+
+  const handleDetail = (id) => {
+    history.push(`/role/${id}`)
   }
 
   const renderTableData = () => {
@@ -120,6 +126,20 @@ function Tabel(props) {
               </TableCell>
             </StyledTableRow>
           );
+        }  else if (props.page ==='role') {
+          const { id, name } = item;
+          return (
+            <StyledTableRow key={id}>
+              <Checkbox></Checkbox>
+              <TableCell align='center' >{name}</TableCell>
+              <TableCell align='center' >
+                <Button size='small' className={classes.actionButton} onClick={()=> handleDetail(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                  Detail
+                </Button>
+              </TableCell>
+            </StyledTableRow>
+          );
+        } 
         } else if (props.page === 'business'){
           const { id, name, parent, createdAt, updatedAt } = item;
           return (
