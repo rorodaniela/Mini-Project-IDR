@@ -4,7 +4,8 @@ let initialState = {
   roles: [],
   companies: [],
   loading: true,
-  isLogin: false
+  isLogin: false,
+  userId: ''
 }
 
 function userReducer(state = initialState, action) {
@@ -22,7 +23,7 @@ function userReducer(state = initialState, action) {
     case "LOADING_TRUE":
       return { ...state, loading: true };
     case "LOGIN_SUCCESS":
-      return { ...state, isLogin: true };
+      return { ...state, userId: action.payload, isLogin: true };
     case "LOGIN_FALSE":
       return { ...state, isLogin: false };
     default:

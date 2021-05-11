@@ -1,6 +1,12 @@
 import Swal from 'sweetalert2'
 const baseUrl = "http://localhost:3001";
 
+export const logout = () => {
+  return {
+    type: "LOGIN_FALSE",
+  };
+}
+
 export const login = (payload) => {
   return async (dispatch) => {
     try {
@@ -19,8 +25,9 @@ export const login = (payload) => {
       if (data.access_token) {
         dispatch({
           type: "LOGIN_SUCCESS",
+          payload: data.id
         });
-        localStorage.setItem("access_token", data.access_token); 
+        localStorage.setItem("access_token", data.access_token) 
           Swal.fire({
             position: "center",
             icon: "success",
@@ -101,7 +108,6 @@ export const getUserByID = (payload) => {
       });
 
       const data = await response.json();
-      console.log(data, "<<< data user by id from action");
       dispatch(saveUserById(data));
       
     } catch (error) {

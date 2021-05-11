@@ -8,6 +8,7 @@ import { getUsers, createUser, getUserByID, editUser, updateUser, clearUserById 
 import { getRoles } from "../store/actions/roleAction";
 import { getCompanies } from "../store/actions/companyAction";
 import FormModal from "../components/FormModal";
+import { cekToken } from '../assets/helpers/jwt'
 
 const drawerWidth = 240;
 
@@ -82,9 +83,13 @@ function User() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { users, user, loading } = useSelector((state) => state.user)
+  const { users, user,  loading } = useSelector((state) => state.user)
   const { roles } = useSelector((state) => state.role)
   const { companies } = useSelector((state) => state.company)
+
+  const [userId, setUserId] = useState('')
+  const [ accessUpdate, setAccessUpdate] = useState(false)
+  const [accessDelete, setAccessDelete] = useState(false);
 
   const [openModal, setOpenModal] = useState(false)
   const [actionStatus, setActionStatus] = useState('')
@@ -92,14 +97,17 @@ function User() {
 
   useEffect(() => {
     if (localStorage.length > 0) {
+      const token = cekToken(localStorage.access_token)
       dispatch(getUsers())
+      setUserId(token.id);
+      dispatch(getUserByID(token.id))
       dispatch(getRoles())
       dispatch(getCompanies())
     } else {
       history.push("/login");
     }
   }, []);
-  console.log(users, "<<< users dari user.js");
+  
   const handleCreateUser = () => {
     setActionStatus('create user')
     dispatch(clearUserById())

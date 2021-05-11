@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getUserByID } from "../store/actions/userAction";
 import {useHistory} from 'react-router-dom'
+import checkRole from '../assets/helpers/checkRole'
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -48,12 +49,20 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'black'
   }
 }))
+
 function Tabel(props) {
+
   const history = useHistory()
   const dispatch = useDispatch()
   const classes = useStyles()
+
+  const accessEdit = true
+  const accessDelete = true
+
   useEffect(()=> {
+    // checkRole()
   }, [props.data])
+
   const handleEdit = (id) => {
     dispatch(getUserByID(id))
     props.edit(id)
@@ -80,12 +89,34 @@ function Tabel(props) {
               <TableCell align='center' >{manager}</TableCell>
               <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
               <TableCell align='center' >
-                <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
-                  Edit
-                </Button>
-                <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
-                  Delete
-                </Button>
+                {
+                  accessEdit ? (
+                    <>
+                      <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                        Edit
+                      </Button>
+
+                    </>
+                  ) : (
+                    <>
+                      <Button disabled size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                        Edit
+                      </Button>
+                    </>
+                  )
+                }
+                {
+                  accessDelete ? (
+                    <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
+                      Delete
+                    </Button>
+                  ) : (
+                    <Button disabled size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
+                      Delete
+                    </Button>
+                  )
+                }
+                
               </TableCell>
             </StyledTableRow>
           )
@@ -103,24 +134,10 @@ function Tabel(props) {
                 {status ? "Active" : "Deactive"}
               </TableCell>
               <TableCell align='center'>
-                <Button
-                  size='small'
-                  className={classes.actionButton}
-                  onClick={() => handleEdit(id)}
-                  variant='contained'
-                  color='primary'
-                  startIcon={<CreateIcon />}
-                >
+                <Button size='small' className={classes.actionButton} onClick={() => handleEdit(id)} variant='contained' color='primary' startIcon={<CreateIcon />}>
                   Edit
                 </Button>
-                <Button
-                  size='small'
-                  className={classes.actionButton}
-                  onClick={() => handleDelete(id)}
-                  variant='contained'
-                  color='secondary'
-                  startIcon={<DeleteOutlineIcon />}
-                >
+                <Button size='small' className={classes.actionButton} onClick={() => handleDelete(id)} variant='contained' color='secondary' startIcon={<DeleteOutlineIcon />}>
                   Delete
                 </Button>
               </TableCell>
@@ -139,7 +156,6 @@ function Tabel(props) {
               </TableCell>
             </StyledTableRow>
           );
-        } 
         } else if (props.page === 'business'){
           const { id, name, parent, createdAt, updatedAt } = item;
           return (

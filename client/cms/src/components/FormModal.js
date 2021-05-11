@@ -99,6 +99,7 @@ function FormModal(props) {
                 <TextField
                   required
                   onChange={(e) => onChangenewData(e)}
+                  type='password'
                   value={newData.password}
                   label='Password'
                   name='password'

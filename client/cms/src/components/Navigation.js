@@ -26,6 +26,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/actions/userAction';
 
 const drawerWidth = 240;
 
@@ -69,6 +71,7 @@ function Navigation(props) {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory()
+  const dispatch = useDispatch()
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -76,6 +79,7 @@ function Navigation(props) {
   };
 
   const handleLogout = () => {
+    dispatch(logout())
     localStorage.removeItem('access_token')
     history.push('/login')
   }
