@@ -54,16 +54,15 @@ function Customer() {
   const dispatch = useDispatch()
 
   const {customers, isLoading} = useSelector((state)=> state.customer)
-  console.log(customers,'<<<<ini customer')
 
   useEffect(() => {
     if (localStorage.length > 0) {
       dispatch(getCustomers())
+      console.log(customers, "<<< customer.js");
     } else {
       history.push("/login");
     }
   }, []);
-
   const handleEditCustomer = (id) => {
   };
 

@@ -5,7 +5,7 @@ let initialState = {
   companies: [],
   loading: true,
   isLogin: false,
-  userId: ''
+  userId: 0
 }
 
 function userReducer(state = initialState, action) {

@@ -1,34 +1,44 @@
-import { useSelector } from "react-redux"
+const cekRole = (user, roleDetails, item, action, entity) => {
+  let valueRole;
+  let company = item.Company;
 
+  if (entity === 1 && item.User) {
+    company =  item.User.Company
+  }
 
-function checkRole({name}) {
-  // const { companies } = useSelector()
-  // const access = true
-  // const companyName = company.name
-  // const companyParent = company.companyParent
-  // const valueRole = user.Role.RoleDetail.valueRole
-  // const action = user.Role.RoleDetail.Action.name
+  roleDetails?.map((role) => {
+    if (action === role.ActionId && role.EntityId === entity) {
+      valueRole = role.valueRole;
+    }
+  });
 
-  // if (action === name) {
-  //   switch (valueRole) {
-  //     case 4:
-  //         return access
-  //     case 3:
-  //         if (user.company.parent === 'none') {
-  //           return access
-  //         }
-  //     case 2:
-  //       if (user.company.name === companyName) {
-  //         return access
-  //       }
-  //     case 1:
-  //       if (user.id) {
-  //         return access
-  //       }
-  //     default:
-  //       break;
-  //   }
-  // }
-}
+  switch (valueRole) {
+    case 4:
+      return true;
+    case 3:
+      if (user.Company.parent === "none") {
+        return true;
+      } else {
+        if (
+          company.parent === user.Company.parent ||
+          company.name === user.Company.parent ||
+          company.parent === user.Company.name
+        ) {
+          return true;
+        }
+      }
+    case 2:
+      if (company.name === user.Company.name) {
+        return true;
+      }
+    case 1:
+      if (item.id === user.id) {
+        return true;
+      }
+    default:
+      return false;
+  }
 
-export default checkRole
+};
+
+export default cekRole

@@ -87,10 +87,6 @@ function User() {
   const { roles } = useSelector((state) => state.role)
   const { companies } = useSelector((state) => state.company)
 
-  const [userId, setUserId] = useState('')
-  const [ accessUpdate, setAccessUpdate] = useState(false)
-  const [accessDelete, setAccessDelete] = useState(false);
-
   const [openModal, setOpenModal] = useState(false)
   const [actionStatus, setActionStatus] = useState('')
 
@@ -99,7 +95,6 @@ function User() {
     if (localStorage.length > 0) {
       const token = cekToken(localStorage.access_token)
       dispatch(getUsers())
-      setUserId(token.id);
       dispatch(getUserByID(token.id))
       dispatch(getRoles())
       dispatch(getCompanies())
@@ -107,6 +102,8 @@ function User() {
       history.push("/login");
     }
   }, []);
+
+  console.log(users, "<<< user.js");
   
   const handleCreateUser = () => {
     setActionStatus('create user')
@@ -147,7 +144,6 @@ function User() {
 
   }
   
-console.log(user,'ini user')
   return (
     <div className={classes.root}>
       <Navigation />

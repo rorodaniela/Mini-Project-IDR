@@ -14,10 +14,12 @@ import {
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserByID } from "../store/actions/userAction";
 import {useHistory} from 'react-router-dom'
-import checkRole from '../assets/helpers/checkRole'
+import { getRoleDetail } from "../store/actions/roleAction";
+import cekRole from '../assets/helpers/checkRole'
+import {cekToken} from '../assets/helpers/jwt'
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -51,16 +53,22 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Tabel(props) {
-
+  const checkRole = cekRole
   const history = useHistory()
   const dispatch = useDispatch()
   const classes = useStyles()
 
-  const accessEdit = true
-  const accessDelete = true
+  const {user} = useSelector((state) => state.user)
+  const {roleDetails} = useSelector((state) => state.role)
 
   useEffect(()=> {
-    // checkRole()
+    if (localStorage.length > 0) {
+      const token = cekToken(localStorage.access_token)
+      dispatch(getUserByID(token.id))
+      dispatch(getRoleDetail())
+    } else {
+      history.push("/login");
+    }
   }, [props.data])
 
   const handleEdit = (id) => {
@@ -77,9 +85,14 @@ function Tabel(props) {
   }
 
   const renderTableData = () => {
+    console.log(props.data, "<<< data props tabel");
     if (props.data.length > 0) {
       return props.data.map((item, idx) => {
-        if (props.page==='user') {
+        if (props.page === 'user') {
+          const access = {
+            edit: checkRole(user, roleDetails, item, 3, 2),
+            delete: checkRole(user, roleDetails, item, 4, 2),
+          };
           const {id, username, manager, status, Company} = item
           return (
             <StyledTableRow key={id}>
@@ -90,7 +103,7 @@ function Tabel(props) {
               <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
               <TableCell align='center' >
                 {
-                  accessEdit ? (
+                  access.edit ? (
                     <>
                       <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
                         Edit
@@ -106,7 +119,7 @@ function Tabel(props) {
                   )
                 }
                 {
-                  accessDelete ? (
+                  access.delete ? (
                     <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
                       Delete
                     </Button>
@@ -121,7 +134,13 @@ function Tabel(props) {
             </StyledTableRow>
           )
         } else if (props.page ==='customer' && item.User) {
+          console.log(user, "<<< user dari table customer");
+          const access = {
+            edit: checkRole(user, roleDetails, item, 3, 1),
+            delete: checkRole(user, roleDetails, item, 4, 1),
+          };
           const { id, name, User, created_info, modified_info, status } = item;
+
           return (
             <StyledTableRow key={id}>
               <Checkbox></Checkbox>
@@ -134,12 +153,30 @@ function Tabel(props) {
                 {status ? "Active" : "Deactive"}
               </TableCell>
               <TableCell align='center'>
-                <Button size='small' className={classes.actionButton} onClick={() => handleEdit(id)} variant='contained' color='primary' startIcon={<CreateIcon />}>
-                  Edit
-                </Button>
-                <Button size='small' className={classes.actionButton} onClick={() => handleDelete(id)} variant='contained' color='secondary' startIcon={<DeleteOutlineIcon />}>
-                  Delete
-                </Button>
+                {
+                  access.edit? (
+                    <Button size='small' className={classes.actionButton} onClick={() => handleEdit(id)} variant='contained' color='primary' startIcon={<CreateIcon />}>
+                      Edit
+                    </Button>
+                  ) : (
+                    <Button disabled size='small' className={classes.actionButton} onClick={() => handleEdit(id)} variant='contained' color='primary' startIcon={<CreateIcon />}>
+                      Edit
+                    </Button>
+                  )
+                } 
+                {
+                  access.delete? (
+                    <Button size='small' className={classes.actionButton} onClick={() => handleDelete(id)} variant='contained' color='secondary' startIcon={<DeleteOutlineIcon />}>
+                      Delete
+                    </Button>
+                  ) : (
+                    <Button disabled size='small' className={classes.actionButton} onClick={() => handleDelete(id)} variant='contained' color='secondary' startIcon={<DeleteOutlineIcon />}>
+                      Delete
+                    </Button>
+                  )
+                }
+                
+                
               </TableCell>
             </StyledTableRow>
           );

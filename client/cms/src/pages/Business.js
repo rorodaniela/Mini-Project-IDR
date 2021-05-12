@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { makeStyles, Paper, useTheme } from "@material-ui/core";
 import Navigation from "../components/Navigation";
 import Tabel from "../components/Tabel";
+import { getCompanies } from "../store/actions/companyAction";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +33,7 @@ const header = [
 ]
 function BusinessUnit() {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const theme = useTheme();
   const history = useHistory();
 
@@ -39,6 +41,7 @@ function BusinessUnit() {
 
   useEffect(() => {
     if (localStorage.length > 0) {
+      dispatch(getCompanies());
     } else {
       history.push("/login");
     }

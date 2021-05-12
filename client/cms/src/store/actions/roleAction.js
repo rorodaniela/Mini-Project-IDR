@@ -123,3 +123,30 @@ export const getAction = () => {
     }
   };
 };
+
+export const saveRoleDetail = (payload) => {
+  return {
+    type: "FETCH_ROLE_DETAIL",
+    payload,
+  };
+};
+
+export const getRoleDetail = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(baseUrl + `/checkrole`, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+      });
+
+      const data = await response.json();
+      dispatch(saveRoleDetail(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
