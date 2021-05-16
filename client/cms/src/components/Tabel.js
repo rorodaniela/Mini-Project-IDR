@@ -72,7 +72,6 @@ function Tabel(props) {
   }, [props.data])
 
   const handleEdit = (id) => {
-    console.log(id, '<<<< id item');
     dispatch(getUserByID(id))
     props.edit(id)
   }
@@ -87,8 +86,8 @@ function Tabel(props) {
 
   const renderTableData = () => {
     let access = {
-      edit: true,
-      delete: true
+      edit: false,
+      delete: false
     }
 
     if (props.data.length > 0) {

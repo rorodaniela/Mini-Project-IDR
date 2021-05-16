@@ -1,6 +1,9 @@
 const cekRole = (user, roleDetails, item, action, entity) => {
   let valueRole;
-  let company = item.data.company;
+  let company = {
+    name: item.data.company,
+    parent: item.companyParent
+  }
 
   if (entity === 1 && item.User) {
     company =  item.data.businessUnit
