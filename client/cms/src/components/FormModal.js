@@ -46,8 +46,7 @@ function FormModal(props) {
       password: props.user ? props.user.password : "",
       CompanyId: props.user ? props.user.CompanyId : "",
       RoleId: props.user ? props.user.RoleId : "",
-      manager: props.user ? props.user.manager : "",
-      status: props.user ? props.user.status : true,
+      manager: props.user ? props.user.manager : ""
     });
   }, [props.user])
 
@@ -121,7 +120,7 @@ function FormModal(props) {
               name='CompanyId'
             >
               {props.companies?.map((company) => {
-                return <MenuItem value={company.id}>{company.name}</MenuItem>;
+                return <MenuItem value={company.id}>{company.data.name}</MenuItem>;
               })}
             </Select>
           </FormControl>
@@ -135,7 +134,7 @@ function FormModal(props) {
               name='RoleId'
             >
               {props.roles?.map((role) => {
-                return <MenuItem value={role.id}>{role.name}</MenuItem>;
+                return <MenuItem value={role.id}>{role.data.name}</MenuItem>;
               })}
             </Select>
           </FormControl>

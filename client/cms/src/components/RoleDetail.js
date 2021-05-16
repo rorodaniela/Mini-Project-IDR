@@ -99,7 +99,6 @@ function RoleDetail() {
                               {
                                 actions.map(action => {
                                   return roleById.map(role => {
-                                    console.log(role.Entity.name === item.name && role.Action.name === action.name , "<<< ini assigned");
                                     if (role.Entity.name === item.name && role.Action.name === action.name) {
                                       return(
                                         <TableCell className={classes.checkBox}>

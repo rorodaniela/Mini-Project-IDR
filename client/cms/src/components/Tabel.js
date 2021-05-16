@@ -72,6 +72,7 @@ function Tabel(props) {
   }, [props.data])
 
   const handleEdit = (id) => {
+    console.log(id, '<<<< id item');
     dispatch(getUserByID(id))
     props.edit(id)
   }
@@ -85,125 +86,86 @@ function Tabel(props) {
   }
 
   const renderTableData = () => {
-    console.log(props.data, "<<< data props tabel");
-    if (props.data.length > 0) {
-      return props.data.map((item, idx) => {
-        if (props.page === 'user') {
-          const access = {
-            edit: checkRole(user, roleDetails, item, 3, 2),
-            delete: checkRole(user, roleDetails, item, 4, 2),
-          };
-          const {id, username, manager, status, Company} = item
-          return (
-            <StyledTableRow key={id}>
-              <Checkbox></Checkbox>
-              <TableCell align='center' >{username}</TableCell>
-              <TableCell align='center' >{Company.name}</TableCell>
-              <TableCell align='center' >{manager}</TableCell>
-              <TableCell align='center' >{status? 'Active' : 'Deactive'}</TableCell>
-              <TableCell align='center' >
-                {
-                  access.edit ? (
-                    <>
-                      <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
-                        Edit
-                      </Button>
+    let access = {
+      edit: true,
+      delete: true
+    }
 
-                    </>
-                  ) : (
+    if (props.data.length > 0) {
+      return props.data.map((item) => {
+        const {id} = item
+        if (props.page === 'user') {
+          access.edit = checkRole(user, roleDetails, item, 3, 2)
+          access.delete = checkRole(user, roleDetails, item, 4, 2)
+
+        } else if (props.page ==='customer') {
+          access.edit = checkRole(user, roleDetails, item, 3, 1)
+          access.delete = checkRole(user, roleDetails, item, 4, 1)
+
+        } 
+        
+        return (
+            <StyledTableRow key={id}>
+              {
+                props.page !== 'business' ? <Checkbox></Checkbox> : <></>
+              }
+              
+              {
+                Object.values(item.data).map(cell => {
+                  return (
                     <>
-                      <Button disabled size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
-                        Edit
-                      </Button>
+                      <TableCell align='center'>{cell === true ? 'active' : cell}</TableCell>
                     </>
                   )
-                }
-                {
-                  access.delete ? (
-                    <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
-                      Delete
+                })
+              }
+
+              {
+                props.page !== 'business' && props.page !== 'role' ? (
+                  <TableCell align='center' >
+                    {
+                      access.edit === true? (
+                        <>
+                          <Button size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                            Edit
+                          </Button>
+
+                        </>
+                      ) : (
+                        <>
+                          <Button disabled size='small' className={classes.actionButton} onClick={()=> handleEdit(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                            Edit
+                          </Button>
+                        </>
+                      )
+                    }
+                    {
+                      access.delete? (
+                        <Button size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
+                          Delete
+                        </Button>
+                      ) : (
+                        <Button disabled size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
+                          Delete
+                        </Button>
+                      )
+                    }
+                    
+                  </TableCell>
+                ) : (<></>)
+              }
+
+              {
+                props.page === 'role' ? (
+                  <TableCell align='center' >
+                    <Button size='small' className={classes.actionButton} onClick={()=> handleDetail(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
+                      Detail
                     </Button>
-                  ) : (
-                    <Button disabled size='small' className={classes.actionButton} onClick={()=> handleDelete(id)} variant="contained" color="secondary" startIcon={<DeleteOutlineIcon />}>
-                      Delete
-                    </Button>
-                  )
-                }
-                
-              </TableCell>
+                  </TableCell>
+                ) : (<></>)
+              }
             </StyledTableRow>
           )
-        } else if (props.page ==='customer' && item.User) {
-          console.log(user, "<<< user dari table customer");
-          const access = {
-            edit: checkRole(user, roleDetails, item, 3, 1),
-            delete: checkRole(user, roleDetails, item, 4, 1),
-          };
-          const { id, name, User, created_info, modified_info, status } = item;
-
-          return (
-            <StyledTableRow key={id}>
-              <Checkbox></Checkbox>
-              <TableCell align='center'>{name}</TableCell>
-              <TableCell align='center'>{User.username}</TableCell>
-              <TableCell align='center'>{User.Company.name}</TableCell>
-              <TableCell align='center'>{created_info}</TableCell>
-              <TableCell align='center'>{modified_info}</TableCell>
-              <TableCell align='center'>
-                {status ? "Active" : "Deactive"}
-              </TableCell>
-              <TableCell align='center'>
-                {
-                  access.edit? (
-                    <Button size='small' className={classes.actionButton} onClick={() => handleEdit(id)} variant='contained' color='primary' startIcon={<CreateIcon />}>
-                      Edit
-                    </Button>
-                  ) : (
-                    <Button disabled size='small' className={classes.actionButton} onClick={() => handleEdit(id)} variant='contained' color='primary' startIcon={<CreateIcon />}>
-                      Edit
-                    </Button>
-                  )
-                } 
-                {
-                  access.delete? (
-                    <Button size='small' className={classes.actionButton} onClick={() => handleDelete(id)} variant='contained' color='secondary' startIcon={<DeleteOutlineIcon />}>
-                      Delete
-                    </Button>
-                  ) : (
-                    <Button disabled size='small' className={classes.actionButton} onClick={() => handleDelete(id)} variant='contained' color='secondary' startIcon={<DeleteOutlineIcon />}>
-                      Delete
-                    </Button>
-                  )
-                }
-                
-                
-              </TableCell>
-            </StyledTableRow>
-          );
-        }  else if (props.page ==='role') {
-          const { id, name } = item;
-          return (
-            <StyledTableRow key={id}>
-              <Checkbox></Checkbox>
-              <TableCell align='center' >{name}</TableCell>
-              <TableCell align='center' >
-                <Button size='small' className={classes.actionButton} onClick={()=> handleDetail(id)} variant="contained" color="primary" startIcon={<CreateIcon />}>
-                  Detail
-                </Button>
-              </TableCell>
-            </StyledTableRow>
-          );
-        } else if (props.page === 'business'){
-          const { id, name, parent, createdAt, updatedAt } = item;
-          return (
-            <StyledTableRow key={id}>
-              <TableCell align='center'>{name}</TableCell>
-              <TableCell align='center'>{parent}</TableCell>
-              <TableCell align='center'>{createdAt}</TableCell>
-              <TableCell align='center'>{updatedAt}</TableCell>
-            </StyledTableRow>
-          );
-        }
       })
     } else {
       return (
@@ -237,7 +199,7 @@ function Tabel(props) {
                 props.page === 'business' ? (
                   <></>
                   ) : (
-                    <StyledTableCell align='center' >ACTION</StyledTableCell>
+                    <StyledTableCell align='center' >Action</StyledTableCell>
                 )
               }
             </StyledTableRow>

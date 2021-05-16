@@ -102,8 +102,6 @@ function User() {
       history.push("/login");
     }
   }, []);
-
-  console.log(users, "<<< user.js");
   
   const handleCreateUser = () => {
     setActionStatus('create user')

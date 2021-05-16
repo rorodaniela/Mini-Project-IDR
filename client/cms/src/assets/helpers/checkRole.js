@@ -1,9 +1,9 @@
 const cekRole = (user, roleDetails, item, action, entity) => {
   let valueRole;
-  let company = item.Company;
+  let company = item.data.company;
 
   if (entity === 1 && item.User) {
-    company =  item.User.Company
+    company =  item.data.businessUnit
   }
 
   roleDetails?.map((role) => {
